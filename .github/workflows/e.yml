@@ -29,7 +29,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          latest: true     
+          latest: true  
+          doNotFailIfNotFound : true  
       - name: ♻️ Set correct environment
         run: |
            TAG=${{ steps.get_release.outputs.tag_name }}

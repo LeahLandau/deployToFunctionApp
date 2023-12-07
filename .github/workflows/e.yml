@@ -31,7 +31,7 @@ jobs:
           tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_e4441d2293124e6a95bc5e64676cff9e }}/python:${{ github.sha }}
           file: ./Dockerfile
 
-    deploy:
+  deploy:
       runs-on: ubuntu-latest
       needs: build
       environment:

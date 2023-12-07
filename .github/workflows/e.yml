@@ -24,25 +24,25 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🔖 Get release tag name
-         id: get_release
-         uses: cardinalby/git-get-release-action@v1
-         env:
-           GITHUB_TOKEN: ${{ github.token }}
-         with:
-           latest: true     
+        id: get_release
+        uses: cardinalby/git-get-release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          latest: true     
       - name: ♻️ Set correct environment
-             run: |
-               TAG=${{ steps.get_release.outputs.tag_name }}
-               echo "TAG=$TAG" >> "$GITHUB_ENV"
+        run: |
+           TAG=${{ steps.get_release.outputs.tag_name }}
+           echo "TAG=$TAG" >> "$GITHUB_ENV"
       - name: 🐳 Docker metadata
-       id: docker_meta
-       uses: docker/metadata-action@v5
-       with:
-         images: ghcr.io/leahlandau/try-${{ matrix.directory }}
-         tags: |
-           type=semver,pattern={{major}}.{{minor}}.{{patch}},value=${{ env.TAG }}
-           type=semver,pattern={{major}}.{{minor}},value=${{ env.TAG }}
-           type=semver,pattern={{major}},value=${{ env.TAG }} 
+        id: docker_meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/leahlandau/try-${{ matrix.directory }}
+          tags: |
+            type=semver,pattern={{major}}.{{minor}}.{{patch}},value=${{ env.TAG }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ env.TAG }}
+            type=semver,pattern={{major}},value=${{ env.TAG }} 
 
       - name: 🏗️ Build and 🫸 push image to GitHub Container Registry
         uses: docker/build-push-action@v5
